@@ -24,6 +24,6 @@
   "homepage": "https://github.com/ephrin/container#readme",
   "dependencies": {
     "joi": "^13.2.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.10"
   }
 }
