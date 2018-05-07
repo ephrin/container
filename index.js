@@ -16,10 +16,10 @@ const normalizeTag = tag => {
 };
 
 /**
- * ES6 impl of Container dependency injection container inspired by pimple of M.PARAISO <mparaiso@online.fr>
- * @class Container
+ * ES6 impl of Pimple dependency injection container inspired by pimple of M.PARAISO <mparaiso@online.fr>
+ * @class Pimple
  */
-class Container {
+class Pimple {
 
     constructor(definitions, deepClone = true) {
         this._deepClone = deepClone;
@@ -76,7 +76,7 @@ getDefinition(serviceId) {
  * @param {string} serviceId
  * @param {Definition} definition
  * @param {...definitionConfiguratorCallback} [configurators]
- * @return {Container}
+ * @return {Pimple}
  */
 setRaw(serviceId, definition, ...configurators) {
     if (!definition instanceof Definition) {
@@ -101,7 +101,7 @@ setRaw(serviceId, definition, ...configurators) {
      * A callback to additionally configure service on it's registration
      * @callback definitionConfiguratorCallback
      * @param {Definition} definition currently registered definition of service
-     * @param {Container} container
+     * @param {Pimple} container
      */
     if (!_.isEmpty(configurators)) {
         _.over([...configurators])(definition, this);
@@ -133,8 +133,8 @@ register(definitionProvider) {
 
 /**
  * @param {Object|Function} definition
- * @param {Object} [context={Container}] Context to bing as this arg to a factory
- * @param [argument={Container}] arguments to pass to a factory callback or instance constructor
+ * @param {Object} [context={Pimple}] Context to bing as this arg to a factory
+ * @param [argument={Pimple}] arguments to pass to a factory callback or instance constructor
  * @return {Definition}
  */
 create(definition, context, argument) {
@@ -248,7 +248,7 @@ getSortedTags(tagName, sortFunction) {
  * labels specific service to execute labeled callback whenever service instantiated
  * @param {string} serviceId A serviceId of service to addLabel
  * @param {string} labels labels to addLabel with
- * @return {Container}
+ * @return {Pimple}
  */
 addLabel(serviceId, ...labels) {
     const rawDef = this.getDefinition(serviceId);
@@ -259,8 +259,8 @@ addLabel(serviceId, ...labels) {
 /**
  * Define
  * @param {string} label
- * @param {Function<service, Container>} callback
- * @return {Container}
+ * @param {Function<service, Pimple>} callback
+ * @return {Pimple}
  */
 defineLabel(label, callback) {
     this._labels.set(label, callback);
@@ -270,7 +270,7 @@ defineLabel(label, callback) {
 getLabel(label) {
     if (!this._labels.has(label)) {
         throw new Error(
-            `Container label "${label}" callback is not defined but service is labeled wih it.`
+            `Pimple label "${label}" callback is not defined but service is labeled wih it.`
         );
     }
 
@@ -318,7 +318,7 @@ configure(definition) {
 
 /**
  * @param {string} name label name to set for the Definition
- * @param {Function} [labelToDefine] adds possibility to define common callback for the label in Container
+ * @param {Function} [labelToDefine] adds possibility to define common callback for the label in Pimple
  * @return {Definition}
  */
 label(name, labelToDefine) {
@@ -330,7 +330,7 @@ label(name, labelToDefine) {
 }
 
 /**
- * Reverse method helper for Container to set tags on Definition directly
+ * Reverse method helper for Pimple to set tags on Definition directly
  * @param tags
  */
 tags(...tags) {
@@ -385,7 +385,7 @@ createResolver(definition) {
 /**
  * Labeling cb factory for configurator
  * @param {string} name name of the label
- * @param [callback] - define label callback for Container
+ * @param [callback] - define label callback for Pimple
  * @return {definitionConfiguratorCallback}
  */
 exports.label = (name, callback) => {
@@ -405,5 +405,5 @@ exports.tag = (...tags) => {
     }
 };
 
-exports.Container = Container;
+exports.Pimple = Pimple;
 exports.Definition = Definition;

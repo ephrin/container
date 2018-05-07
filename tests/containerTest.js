@@ -1,24 +1,24 @@
 const {describe} = require('mocha');
 const {expect} = require('chai');
-const {Container, tag, label} = require('../index.js');
+const {Pimple, tag, label} = require('../index.js');
 const _ = require('lodash');
 
-describe('Container', function () {
+describe('Pimple', function () {
     describe('#set()', () => {
         it('should add service definition to the container', () => {
-            const pimple = new Container();
+            const pimple = new Pimple();
             const data = {data: 'test'};
             pimple.set('data', data);
             expect(pimple.get('data'), 'copy is same').to.be.eql(data);
             expect(pimple.get('data'), 'gives a copy').to.be.not.equal(data);
         });
         it('can be anything', () => {
-            const pimple = new Container({value: 'string', nan: NaN});
+            const pimple = new Pimple({value: 'string', nan: NaN});
             expect(pimple.get('value')).to.equal('string');
             expect(pimple.get('nan')).to.be.NaN;
         });
         it('but functions are treated as factory functions', () => {
-            const pimple = new Container({
+            const pimple = new Pimple({
                 arrOfContextAndArguments: function (...args) {
                     return [this, ...args]
                 }
@@ -27,7 +27,7 @@ describe('Container', function () {
             expect(pimple.get('arrOfContextAndArguments')).to.be.eql([pimple, pimple])
         });
         it('configure callbacks and reverse tags method of definition', () => {
-            const pimple = new Container();
+            const pimple = new Pimple();
 
             pimple.set('myObj', {a: 1}, tag('objects'));
 
@@ -36,7 +36,7 @@ describe('Container', function () {
     });
     describe('#setShared()', function () {
         it('shared instances', () => {
-            const pimple = new Container();
+            const pimple = new Pimple();
             const arr = [];
             pimple.setShared('array', arr);
             pimple.set('array-c', arr);
@@ -48,7 +48,7 @@ describe('Container', function () {
 
     describe('#labeling', () => {
         it('should call once for shared', () => {
-            const pimple = new Container();
+            const pimple = new Pimple();
             let called = 0;
             pimple.defineLabel('push', (instance) => {
                 called++;
@@ -63,7 +63,7 @@ describe('Container', function () {
             expect(called).to.equal(1);
         });
         it('should call every time for simple', () => {
-            const pimple = new Container();
+            const pimple = new Pimple();
             let called = 0;
             pimple.defineLabel('push', (instance) => {
                 called++;
@@ -79,7 +79,7 @@ describe('Container', function () {
         });
 
         it('multiple unique labels are available and order depends on service labeling', () => {
-            const pimple = new Container();
+            const pimple = new Pimple();
             let called = 0;
 
             pimple.defineLabel('pushEverything', (instance) => {
@@ -103,7 +103,7 @@ describe('Container', function () {
         });
 
         it('inline declaration and set of label', () => {
-            const pimple = new Container();
+            const pimple = new Pimple();
 
             pimple.set('arr', [], label('push', arr => arr.push(1)));
 
@@ -113,7 +113,7 @@ describe('Container', function () {
 
     describe('#register', () => {
         it('should call a provided function to operate in with argument of di', () => {
-            const pimple = new Container();
+            const pimple = new Pimple();
 
             pimple.register((pimpleInstance) => {
                 pimpleInstance.set('test', 'ok')
@@ -125,7 +125,7 @@ describe('Container', function () {
 
     describe('#tag', () => {
         it('should return tagged services Map', () => {
-            const pimple = new Container({
+            const pimple = new Pimple({
                 data1: 'data',
                 data2: []
             });
@@ -149,7 +149,7 @@ describe('Container', function () {
         });
 
         it('main purpose of tagged labels', () => {
-            const pimple = new Container({
+            const pimple = new Pimple({
                 custom1: [1, 2, 3],
                 custom2: [4, 5]
             });
@@ -183,7 +183,7 @@ describe('Container', function () {
 
     describe('#overTags', () => {
         it('ordering by specific field', () => {
-            const pimple = new Container;
+            const pimple = new Pimple;
             const sortedASC = [];
             const sortedDESC = [];
             pimple.set('a', 'A');
@@ -206,7 +206,7 @@ describe('Container', function () {
         });
 
         it('ordering by specific field', () => {
-            const pimple = new Container;
+            const pimple = new Pimple;
             const sortedPriorityRepeated = [];
             pimple.set('a', 'A');
             pimple.set('b', 'B');
@@ -225,7 +225,7 @@ describe('Container', function () {
 
     describe('#id', () => {
         it('should specify id of service while compiling', () => {
-            const pimple = new Container({
+            const pimple = new Pimple({
                 myIdentifier: [1, 2, 3]
             });
 
