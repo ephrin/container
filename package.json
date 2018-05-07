@@ -1,5 +1,5 @@
 {
-  "name": "container",
+  "name": "pimplejs",
   "version": "1.0.0",
   "description": "DIC for node",
   "main": "index.js",
