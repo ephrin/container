@@ -1,6 +1,6 @@
 {
   "name": "pimple-dic",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "DIC for node",
   "main": "index.js",
   "scripts": {
@@ -23,9 +23,7 @@
   },
   "homepage": "https://github.com/ephrin/container#readme",
   "dependencies": {
-    "chai": "^4.1.2",
     "joi": "^13.2.0",
     "lodash": "^4.17.10",
-    "mocha": "^5.1.1"
   }
 }
