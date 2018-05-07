@@ -1,6 +1,6 @@
 {
   "name": "pimple-dic",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "DIC for node",
   "main": "index.js",
   "scripts": {
