@@ -1,0 +1,29 @@
+{
+  "name": "container",
+  "version": "1.0.0",
+  "description": "DIC for node",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ephrin/container.git"
+  },
+  "keywords": [
+    "dic",
+    "container",
+    "dependency-injection",
+    "ioc"
+  ],
+  "author": "ephrin <vladimir.mirza@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ephrin/container/issues"
+  },
+  "homepage": "https://github.com/ephrin/container#readme",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "lodash": "^4.17.10"
+  }
+}
